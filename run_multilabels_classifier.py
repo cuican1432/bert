@@ -419,7 +419,51 @@ class MultiLabelTextProcessor(DataProcessor):
                 InputExample(guid=guid, text_a=text_a, label=labels))
         return examples
 
+class MultiLabelTextProcessor_original(DataProcessor):
 
+    def get_train_examples(self, data_dir):
+        filename = 'train.csv'
+        data_df = pd.read_csv(os.path.join(data_dir, filename))
+        #             data_df['comment_text'] = data_df['comment_text'].apply(cleanHtml)
+        return self._create_examples(data_df, "train")
+
+    def get_dev_examples(self, data_dir):
+        """See base class."""
+        filename = 'val.csv'
+        data_df = pd.read_csv(os.path.join(data_dir, filename))
+        #             data_df['comment_text'] = data_df['comment_text'].apply(cleanHtml)
+        return self._create_examples(data_df, "dev")
+
+    def get_test_examples(self, data_dir):
+        data_df = pd.read_csv(os.path.join(data_dir, 'test.csv'))
+        return self._create_examples(data_df, "test")
+
+    def get_labels(self):
+        """See base class."""
+        return  [
+                    'company',
+                    'personal',
+                    'personal&business',
+                    'logistics',
+                    'employment',
+                    'document'
+                        ]
+
+    def _create_examples(self, df, set_type):
+        """Creates examples for the training and dev sets."""
+        examples = []
+        for (i, row) in enumerate(df.values):
+            guid = i
+            text_a = row[0]
+            if set_type == 'test':
+                # this may be modify according to your data format
+                labels = [0, 0, 0, 0, 0, 0]
+            else:
+                labels = [int(a) for a in row[1:]]
+            examples.append(
+                InputExample(guid=guid, text_a=text_a, label=labels))
+        return examples
+    
 def convert_single_example(ex_index, example, label_list, max_seq_length,
                            tokenizer):
     """Converts a single `InputExample` into a single `InputFeatures`."""
