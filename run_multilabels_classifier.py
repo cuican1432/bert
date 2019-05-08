@@ -899,11 +899,6 @@ def input_fn_builder(features, seq_length, is_training, drop_remainder):
 #     return features
 def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer):
     """Loads a data file into a list of `InputBatch`s."""
-    tf.logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
-                    datefmt='%m/%d/%Y %H:%M:%S',
-                    level=tf.logging.INFO)
-    logger = tf.logging.getLogger(__name__)
-
     label_map = {label : i for i, label in enumerate(label_list)}
 
     features = []
@@ -969,15 +964,15 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
 
 #         label_id = label_map[example.label]
         if ex_index < 0:
-            logger.info("*** Example ***")
-            logger.info("guid: %s" % (example.guid))
-            logger.info("tokens: %s" % " ".join(
+            tf.logging.info("*** Example ***")
+            tf.logging.info("guid: %s" % (example.guid))
+            tf.logging.info("tokens: %s" % " ".join(
                     [str(x) for x in tokens]))
-            logger.info("input_ids: %s" % " ".join([str(x) for x in input_ids]))
-            logger.info("input_mask: %s" % " ".join([str(x) for x in input_mask]))
-            logger.info(
+            tf.logging.info("input_ids: %s" % " ".join([str(x) for x in input_ids]))
+            tf.logging.info("input_mask: %s" % " ".join([str(x) for x in input_mask]))
+            tf.logging.info(
                     "segment_ids: %s" % " ".join([str(x) for x in segment_ids]))
-            logger.info("label: %s (id = %s)" % (example.labels, labels_ids))
+            tf.logging.info("label: %s (id = %s)" % (example.labels, labels_ids))
 
         features.append(
                 InputFeatures(input_ids=input_ids,
