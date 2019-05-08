@@ -960,7 +960,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
         
         labels_ids = []
         for label in example.label:
-            labels_ids.append(float(label))
+            labels_ids.append(int(label))
 
 #         label_id = label_map[example.label]
         if ex_index < 0:
