@@ -978,7 +978,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
                 InputFeatures(input_ids=input_ids,
                               input_mask=input_mask,
                               segment_ids=segment_ids,
-                              label_ids=labels_ids))
+                              label_id=labels_ids))
     return features
 
 
