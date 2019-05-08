@@ -959,7 +959,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
         assert len(segment_ids) == max_seq_length
         
         labels_ids = []
-        for label in example.labels:
+        for label in example.label:
             labels_ids.append(float(label))
 
 #         label_id = label_map[example.label]
@@ -972,7 +972,7 @@ def convert_examples_to_features(examples, label_list, max_seq_length, tokenizer
             tf.logging.info("input_mask: %s" % " ".join([str(x) for x in input_mask]))
             tf.logging.info(
                     "segment_ids: %s" % " ".join([str(x) for x in segment_ids]))
-            tf.logging.info("label: %s (id = %s)" % (example.labels, labels_ids))
+            tf.logging.info("label: %s (id = %s)" % (example.label, labels_ids))
 
         features.append(
                 InputFeatures(input_ids=input_ids,
